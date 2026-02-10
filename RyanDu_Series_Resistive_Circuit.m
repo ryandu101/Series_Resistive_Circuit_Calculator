@@ -1,4 +1,4 @@
-% RyanDu_Series_Resistive_Circuit.m
+% Ryan Du, 02-10-2026
 % Calculates total resistance, current, voltage drops, and power for a series circuit
 
 1; % Forces Octave to treat this as a script file rather than a function file
