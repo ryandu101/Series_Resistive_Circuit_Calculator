@@ -1,27 +1,39 @@
 % Ryan Du, 02-10-2026
-% Calculates total resistance, current, voltage drops, and power for a series circuit
+% We need to calculate total resistance, current, voltage drops, and power for a series circuit
 
-1; % Forces Octave to treat this as a script file rather than a function file
+1;  % This little makes it so that Octave actually recognizes this file as a script file rather than the whole .m file as a function file
+    % I have no idea why this works
+
+% Define the input values
+R1 = 100;
+R2 = 200;
+R3 = 300;
+R4 = 400;
+V_source = 100;
+
+% We put those resistor values into an array to make it easier to work with.
+resistors = [R1, R2, R3, R4];
+
 
 % --- Modular Functions ---
 
 function R_eq = calculate_series_resistance(resistor_array)
     % Calculates the equivalent resistance of resistors in series
-    % R_total = R1 + R2 + ... + Rn
+    % R_total = R1 + R2 + ... + Rn so we get the sum of all of the items in the array.
     R_eq = sum(resistor_array);
 end
 
 function V_drops = calculate_voltage_drops(resistor_array, R_total, V_source)
     % Calculates the voltage drop across each resistor using the Voltage Divider rule
     % Vx = (Rx / Rt) * Vs
-    % The './' operator performs element-wise division across the array
+    % We use './' operator to perform division across the array
     V_drops = (resistor_array ./ R_total) .* V_source;
 end
 
 function P_dissipated = calculate_power_dissipated(V_drops, resistor_array)
     % Calculates the power dissipated by each individual resistor
     % Px = (Vx^2) / Rx
-    % The '.^' and './' operators perform element-wise math
+    % We use the '.^' and './' operators to perform the calculations. 
     P_dissipated = (V_drops .^ 2) ./ resistor_array;
 end
 
@@ -31,23 +43,11 @@ function P_total = calculate_total_power(V_source, R_total)
     P_total = (V_source ^ 2) / R_total;
 end
 
-% --- Main Script Logic ---
-
-% Define the input values
-R1 = 100;
-R2 = 200;
-R3 = 300;
-R4 = 400;
-V_source = 100;
-
-% Create an array of the resistors
-resistors = [R1, R2, R3, R4];
-
 % 1. Calculate total resistance
 R_total = calculate_series_resistance(resistors);
 fprintf('Total Series Resistance: %d Ohms\n', R_total);
 
-% 2. Calculate total current (Optional, but good for verification)
+% 2. Calculate total current (to verify)
 I_total = V_source / R_total;
 fprintf('Total Current: %.4f Amps\n\n', I_total);
 
@@ -69,5 +69,5 @@ fprintf('\n');
 P_total = calculate_total_power(V_source, R_total);
 fprintf('Total Power Supplied: %.2f Watts\n', P_total);
 
-% Verification: The sum of individual power dissipations should equal total power
+% We verify the total sum of individual power dissipation should equal total power
 fprintf('Sum of individual power dissipated: %.2f Watts\n', sum(p_dissipated));
