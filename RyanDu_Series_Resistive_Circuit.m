@@ -20,6 +20,8 @@ resistors = [R1, R2, R3, R4];
 function R_eq = calculate_series_resistance(resistor_array)
     % Calculates the equivalent resistance of resistors in series
     % R_total = R1 + R2 + ... + Rn so we get the sum of all of the items in the array.
+    % Octave is able to perform element-wise operations. So, since we put all of the resistors in an array earlier
+    % Now, we can just simply add them all together with sum.
     R_eq = sum(resistor_array);
 end
 
@@ -27,6 +29,7 @@ function V_drops = calculate_voltage_drops(resistor_array, R_total, V_source)
     % Calculates the voltage drop across each resistor using the Voltage Divider rule
     % Vx = (Rx / Rt) * Vs
     % We use './' operator to perform division across the array
+    % Octave automatically ...
     V_drops = (resistor_array ./ R_total) .* V_source;
 end
 
